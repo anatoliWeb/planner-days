@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -11,7 +10,5 @@
 |
 */
 
-//Route::get('/', function()
-//{
-//	return View::make('hello');
-//});
+Route::get('login','Account_IndexController@getAuthorization');
+Route::post('login','Account_IndexController@postAuthorization');
