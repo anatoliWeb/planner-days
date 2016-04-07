@@ -8,11 +8,21 @@
 
 class Account_Service_Form_Validation extends Core_Service_Form_Validation_Abstract{
 
-    public function fieldsAutorisation(){
+    public function fieldsAuthorization(){
         $this->_setValidateFields(array(
             'login' =>  'required|min:4',
             'password'  =>  'required|min:4'
         ));
     }
+
+    public function fieldRegistration(){
+        $this->_setValidateFields(array(
+            'login' =>  'required|min:4|unique:account,login',
+            'password'  =>  'required|min:4',
+            'confirmPassword'  =>  'required|same:password|min:4',
+            'email'             => 'required|email|min:6|unique:account,email'
+        ));
+    }
+
 
 }

@@ -24,11 +24,6 @@ class Account_IndexController extends Core_Controller_Abstract{
     }
 
     public function getAuthorization(){
-
-        if(Auth::check()){
-            return Redirect::to('/');
-        }
-
         $view = View::make('account::script.default.index.authorizationForm');
         $view->with('offBlockHead',1);
 
@@ -36,16 +31,13 @@ class Account_IndexController extends Core_Controller_Abstract{
     }
 
     public function postAuthorization(){
-        if(Auth::check()){
-            return Redirect::to('/');
-        }
         $data = Input::all();
 
         /**
          * var /Account_Service_Form_Validation
          */
         $serviceValidation = new Account_Service_Form_Validation($data);
-        $serviceValidation->fieldsAutorisation();
+        $serviceValidation->fieldsAuthorization();
         try{
 
             if($serviceValidation->validate()){
@@ -54,7 +46,10 @@ class Account_IndexController extends Core_Controller_Abstract{
 
             return Redirect::to('/');
         }catch (Exception $e){
-            var_dump($e->getMessage());
+            $view = View::make('account::script.default.index.authorizationForm');
+            $view->with('offBlockHead',1);
+            $view->with('messages', array('errors'=>$e->getMessage()));
+            return $view;
         }
     }
 
@@ -62,4 +57,65 @@ class Account_IndexController extends Core_Controller_Abstract{
         Auth::logout();
         return Redirect::action('Account_IndexController@getAuthorization');
     }
+
+    public function getRegistration(){
+        $view = View::make('account::script.default.index.registrationForm');
+        $view->with('offBlockHead',1);
+
+        return $view;
+    }
+
+    public function postRegistration(){
+        $data = Input::all();
+
+        /**
+         * var /Account_Service_Form_Validation
+         */
+        $serviceValidation = new Account_Service_Form_Validation($data);
+        $serviceValidation->fieldRegistration();
+
+        try{
+
+            if($serviceValidation->validate()){
+                $this->service->registration($serviceValidation->getFailed());
+            }else{
+                $view = View::make('account::script.default.index.registrationForm');
+                $view->with('offBlockHead',1);
+                $view->with('data', $data);
+                $view->with('messages', array('errors'=>$serviceValidation->getMessages()));
+                return $view;
+            }
+
+            Session::push('message.info','Please confirm you email!');
+            return Redirect::action('Account_IndexController@getAuthorization');
+
+        }catch (Exception $e){
+            DB::rollback();
+            $view = View::make('account::script.default.index.registrationForm');
+            $view->with('offBlockHead',1);
+            $view->with('data', $data);
+            $view->with('messages', array('errors'=>$e->getMessage()));
+            return $view;
+        }
+    }
+
+    public function getForgotPassword(){
+        $view = View::make('account::script.default.index.forgotPasswordForm');
+        $view->with('offBlockHead',1);
+
+        return $view;
+    }
+
+    public function postForgotPassword(){
+
+    }
+
+    public function getConfirmEmail($hash){
+
+    }
+
+    public function postConfirmEmail(){
+
+    }
+
 }

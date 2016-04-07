@@ -10,9 +10,19 @@
 |
 */
 
-Route::get('login','Account_IndexController@getAuthorization');
-Route::post('login','Account_IndexController@postAuthorization');
+
+Route::group(array('before'=>'guest'), function() {
+    Route::get('login', 'Account_IndexController@getAuthorization');
+    Route::post('login', 'Account_IndexController@postAuthorization');
+    Route::get('registration','Account_IndexController@getRegistration');
+    Route::post('registration','Account_IndexController@postRegistration');
+    Route::get('forgot-password','Account_IndexController@getForgotPassword');
+    Route::post('forgot-password','Account_IndexController@postForgotPassword');
+    Route::get('/confirm/{hash?}','Account_IndexController@getConfirmEmail');
+    Route::post('/confirm','Account_IndexController@postConfirmEmail');
+});
 
 Route::group(array('before'=>'auth'), function(){
     Route::match(array("GET", "POST"),'/logout', 'Account_IndexController@getLogout');
 });
+

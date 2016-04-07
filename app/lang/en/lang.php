@@ -8,7 +8,7 @@
 
 return array(
     "authorization"                 => "Authorization",
-
+    "registration"                  =>  "Registration",
     "Login"                         => "Login",
     "Logout"                        => "Logout",
     "LoginExample"                  => "login",
@@ -17,9 +17,15 @@ return array(
     "Update"                        => "Update",
     "RememberMe"                    => "Remember Me",
     "Password"                      => "Password",
+    "password"                      => "Password",
+    "confirmPassword"               => "Confirm password",
+    "agreeRule"                     => "Agree rule",
     "Account"                       => "Account",
-
-
+    "or"                            => "or",
+    "emailExample"                  =>  "email@email.com",
+    "rules"                         =>  "rules",
+    "Error"                         =>  "Error",
+    "confirmEmail"                  =>  "Confirm Email",
 
 
     "Question"                      => "Question",

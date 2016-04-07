@@ -29,11 +29,32 @@ class Account_Services_Account extends Core_Service_Abstract{
             Auth::login($rows, !empty($data['remember']));
 //            $modelAccountActivity = new Account_models_AccountActivity();
 //            $modelAccountActivity->createAction($rows->getAttribute('id'));
+        }else{
+            throw new Exception('error login or password');
         }
     }
 
     public function _password($login, $password){
         return md5($login.Config::get('app.key').$password);
+    }
+
+    public function registration($data){
+        DB::beginTransaction();
+        $dataModel = array(
+            'login'     =>  $data['login'],
+            'password'  => $this->_password($data['login'], $data['password']),
+            'email'     => $data['email'],
+            'active'    =>  1
+        );
+
+        $model = $this->model;
+        $modelId = $model->insertGetId($dataModel);
+
+        $rows = $model->find($modelId);
+
+        $this->sendConfirmEmail($rows);
+
+        DB::commit();
     }
 
     public function getAll(){
@@ -86,5 +107,16 @@ class Account_Services_Account extends Core_Service_Abstract{
 
         return array($modelId, $data);
 
+    }
+
+    public function sendConfirmEmail($data){
+
+        $data_email=[
+            'hash'         =>  $data->hash
+        ];
+
+        Mail::send('account::emails.confirmEmail', $data_email , function ($m) use ($data) {
+            $m->to($data->email, $data->login)->subject(Lang::get('lang.confirmEmail'));
+        });
     }
 }

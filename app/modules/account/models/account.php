@@ -50,6 +50,7 @@ class Account_Models_Account extends Core_Models_Abstract implements UserInterfa
             ->where('password', $password)
             ->where('login', $login)
             ->where('active', '1')
+            ->where('hash', '')
             ;
     }
 }
