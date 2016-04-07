@@ -24,7 +24,7 @@ class CreateTableAccount extends Migration {
             $table->string('login', 60)->unique();
             $table->string('password', 40);
             $table->boolean('active')->default('0');
-            $table->string('hash', 64)->default(md5(RAND()));
+            $table->string('hash', 64);
             $table->rememberToken();
             $table->timestamps();
 		});

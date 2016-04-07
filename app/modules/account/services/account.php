@@ -44,7 +44,8 @@ class Account_Services_Account extends Core_Service_Abstract{
             'login'     =>  $data['login'],
             'password'  => $this->_password($data['login'], $data['password']),
             'email'     => $data['email'],
-            'active'    =>  1
+            'active'    =>  1,
+            'hash'      =>  md5(microtime())
         );
 
         $model = $this->model;
@@ -107,6 +108,21 @@ class Account_Services_Account extends Core_Service_Abstract{
 
         return array($modelId, $data);
 
+    }
+
+    public function confirmEmail($data){
+        $model = $this->model->select();
+        $model->where('login','=',$data['login']);
+        $model->where('hash','=',$data['hash']);
+        if($model->count()){
+            $rowModel = $model->first();
+            $rowModel->update(array(
+                'hash'  =>  '',
+                'created_at' => date('Y-m-d H:m:s')
+            ));
+        }else{
+            throw new Exception('error login or url');
+        }
     }
 
     public function sendConfirmEmail($data){

@@ -74,26 +74,25 @@ class Account_IndexController extends Core_Controller_Abstract{
         $serviceValidation = new Account_Service_Form_Validation($data);
         $serviceValidation->fieldRegistration();
 
+        $view = View::make('account::script.default.index.registrationForm');
+        $view->with('offBlockHead',1);
+        $view->with('data', $data);
         try{
 
             if($serviceValidation->validate()){
                 $this->service->registration($serviceValidation->getFailed());
             }else{
-                $view = View::make('account::script.default.index.registrationForm');
-                $view->with('offBlockHead',1);
-                $view->with('data', $data);
+
                 $view->with('messages', array('errors'=>$serviceValidation->getMessages()));
                 return $view;
             }
 
-            Session::push('message.info','Please confirm you email!');
+            Session::put('messages.info','Please confirm you email!');
             return Redirect::action('Account_IndexController@getAuthorization');
 
         }catch (Exception $e){
             DB::rollback();
-            $view = View::make('account::script.default.index.registrationForm');
-            $view->with('offBlockHead',1);
-            $view->with('data', $data);
+
             $view->with('messages', array('errors'=>$e->getMessage()));
             return $view;
         }
@@ -111,11 +110,43 @@ class Account_IndexController extends Core_Controller_Abstract{
     }
 
     public function getConfirmEmail($hash){
-
+        $view = View::make('account::script.default.index.confirmEmailForm');
+        $view->with('offBlockHead',1);
+        $view->with('hash', $hash);
+        return $view;
     }
 
-    public function postConfirmEmail(){
+    public function postConfirmEmail($hash){
+        $data = Input::all();
 
+        /**
+         * var /Account_Service_Form_Validation
+         */
+        $serviceValidation = new Account_Service_Form_Validation($data);
+        $serviceValidation->fieldConfirmEmail();
+
+        $view = View::make('account::script.default.index.confirmEmailForm');
+        $view->with('offBlockHead',1);
+        $view->with('hash', $hash);
+
+        try{
+
+            if($serviceValidation->validate()){
+                $this->service->confirmEmail($serviceValidation->getFailed());
+            }else{
+
+                $view->with('messages', array('errors'=>$serviceValidation->getMessages()));
+                return $view;
+            }
+
+            Session::put('messages.info','Please enter login and password!');
+            return Redirect::action('Account_IndexController@getAuthorization');
+
+        }catch (Exception $e){
+
+            $view->with('messages', array('errors'=>$e->getMessage()));
+            return $view;
+        }
     }
 
 }

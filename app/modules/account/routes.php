@@ -19,7 +19,7 @@ Route::group(array('before'=>'guest'), function() {
     Route::get('forgot-password','Account_IndexController@getForgotPassword');
     Route::post('forgot-password','Account_IndexController@postForgotPassword');
     Route::get('/confirm/{hash?}','Account_IndexController@getConfirmEmail');
-    Route::post('/confirm','Account_IndexController@postConfirmEmail');
+    Route::post('/confirm/{hash?}','Account_IndexController@postConfirmEmail');
 });
 
 Route::group(array('before'=>'auth'), function(){

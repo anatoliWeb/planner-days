@@ -10,6 +10,7 @@ return array(
     "authorization"                 => "Authorization",
     "registration"                  =>  "Registration",
     "Login"                         => "Login",
+    "login"                         => "Login",
     "Logout"                        => "Logout",
     "LoginExample"                  => "login",
     "Password"                      => "Password",
@@ -26,6 +27,8 @@ return array(
     "rules"                         =>  "rules",
     "Error"                         =>  "Error",
     "confirmEmail"                  =>  "Confirm Email",
+    "confirm"                       =>  "Confirm",
+    "info"                          =>  "Info",
 
 
     "Question"                      => "Question",

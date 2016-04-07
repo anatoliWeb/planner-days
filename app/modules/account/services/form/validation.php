@@ -24,5 +24,10 @@ class Account_Service_Form_Validation extends Core_Service_Form_Validation_Abstr
         ));
     }
 
-
+    public function fieldConfirmEmail(){
+        $this->_setValidateFields(array(
+            'login'  =>  'required|min:4',
+            'hash'   =>  'required|min:30|max:34'
+        ));
+    }
 }

@@ -9,7 +9,7 @@
       border-radius: 3px
    }
 
-    .alert-error{
+    .alert-messages{
         position: absolute;
         width: 358px;
         z-index: 99;
