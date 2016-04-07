@@ -17,8 +17,6 @@ class Account_IndexController extends Core_Controller_Abstract{
     public function index(){
 
         $rows = $this->service->getAll();
-
-
         $view = View::make('account::script.default.index.index');
         $view->with('rows',$rows);
         $view->with('account', Auth::user());
@@ -58,12 +56,10 @@ class Account_IndexController extends Core_Controller_Abstract{
         }catch (Exception $e){
             var_dump($e->getMessage());
         }
-        var_dump($data);
-        die;
     }
 
     public function getLogout(){
         Auth::logout();
-        return Redirect::to('/');
+        return Redirect::action('Account_IndexController@getAuthorization');
     }
 }

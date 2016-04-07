@@ -13,16 +13,13 @@ class Account_Services_Account extends Core_Service_Abstract{
      */
     protected $model;
 
+    /**
+     * @var string
+     */
     protected $_models = 'Account_Models_Account';
-
-//    protected function _init(){
-//        $this->model = new Account_Models_Account();
-//        parent::_init();
-//    }
 
 
     public function authorization($data){
-        //validation
 
         // check
         $password = self::_password($data['login'] ,$data['password']);
@@ -30,8 +27,8 @@ class Account_Services_Account extends Core_Service_Abstract{
         if($modelCheckAuthorization->count()){
             $rows = $modelCheckAuthorization->firstOrFail();
             Auth::login($rows, !empty($data['remember']));
-            $modelAccountActivity = new Account_models_AccountActivity();
-            $modelAccountActivity->createAction($rows->getAttribute('id'));
+//            $modelAccountActivity = new Account_models_AccountActivity();
+//            $modelAccountActivity->createAction($rows->getAttribute('id'));
         }
     }
 

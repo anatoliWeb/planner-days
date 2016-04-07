@@ -12,3 +12,7 @@
 
 Route::get('login','Account_IndexController@getAuthorization');
 Route::post('login','Account_IndexController@postAuthorization');
+
+Route::group(array('before'=>'auth'), function(){
+    Route::match(array("GET", "POST"),'/logout', 'Account_IndexController@getLogout');
+});

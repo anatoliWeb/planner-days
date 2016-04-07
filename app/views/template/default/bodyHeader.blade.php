@@ -89,7 +89,7 @@ $method = $actionName[1];
         {{--<button type="submit" class="btn btn-default">Submit</button>--}}
       {{--</form>--}}
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{--action('Account_IndexController@getLogout')--}}">{{Lang::get('lang.Logout')}} <span class="glyphicon glyphicon-off" aria-hidden="true"></span></a></li>
+        <li><a href="{{action('Account_IndexController@getLogout')}}">{{Lang::get('lang.Logout')}} <span class="glyphicon glyphicon-off" aria-hidden="true"></span></a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
