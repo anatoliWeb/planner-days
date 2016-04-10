@@ -3,6 +3,7 @@
 $actionName = explode(chr(64),Route::current()->getActionName());
 $controller = $actionName[0];
 $method = $actionName[1];
+
 ?>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -21,10 +22,30 @@ $method = $actionName[1];
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <?php $actionController = 'Account_IndexController';?>
-        <li @if($controller == $actionController)class="active"@endif><a href="{{--action($actionController.'@index')--}}">{{Lang::get('lang.Account')}}</a></li>
+        <li @if($controller == $actionController)class="active"@endif><a href="{{action($actionController.'@index')}}">{{Lang::get('lang.Account')}}</a></li>
 
-        <?php $actionController = 'Question_IndexController';?>
-        <li @if($controller == $actionController)class="active"@endif><a href="{{--action($actionController.'@index')--}}">{{Lang::get('lang.Question')}}</a></li>
+
+        <?php
+        $actionControllers = array(
+             array('action'=>'Tasks_IndexController','method' => 'index', 'name' => Lang::get('lang.show'),'class'=>''),
+             array('action'=>'Tasks_IndexController','method' => 'getEdit', 'name' => Lang::get('lang.edit'),'class'=>'')
+            );
+        $active = false;
+            foreach($actionControllers as $data){
+                if($controller == $data['action'] && $method == $data['method']){
+                    $active = true;
+                }
+            }
+            ?>
+        <li class="dropdown @if($active) active @endif">
+            <a href="{{action('Tasks_IndexController@index')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Lang::get('lang.Tasks')}}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                @foreach($actionControllers as $action=>$data)
+                    <li class=" @if($controller == $data['action'] && $method == $data['method']) active @endif @if(!empty($data['class'])){{$data['class']}}@endif" ><a href="{{action($data['action'].'@'.$data['method'])}}">{{$data['name']}}</a></li>
+                @endforeach
+            </ul>
+        </li>
+
 
         <?php $actionControllers =
             array(
@@ -44,8 +65,12 @@ $method = $actionName[1];
             </ul>
         </li>
 
-        <?php
+        <?php $actionController = 'Account_IndexController';?>
+        <li @if($controller == $actionController)class="active"@endif><a href="{{action($actionController.'@index')}}">{{Lang::get('lang.statistic')}}</a></li>
 
+
+
+        <?php
         $actionControllers =
             array(
              array('action'=>'Ifram_IndexController','method' => 'index', 'name' => Lang::get('lang.createOrEdit'),'class'=>''),

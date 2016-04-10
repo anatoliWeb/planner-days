@@ -236,5 +236,9 @@ return array(
     "result"                           =>  "Result",
 
 
-
+    // Tasks
+    "Tasks"                         =>  "Tasks",
+    "start"                         =>  "Start",
+    "end"                         =>  "End",
+    "type"                         =>  "type",
 );

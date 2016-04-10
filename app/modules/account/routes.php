@@ -26,3 +26,11 @@ Route::group(array('before'=>'auth'), function(){
     Route::match(array("GET", "POST"),'/logout', 'Account_IndexController@getLogout');
 });
 
+Route::group(array('before'=>'auth','prefix'=>'account'), function(){
+    Route::match(array("GET", "POST"),'/', 'Account_IndexController@index');
+    Route::get('edit', 'Account_IndexController@getAuthorization');
+    Route::post('edit', 'Account_IndexController@postAuthorization');
+});
+
+
+
