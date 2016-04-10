@@ -56,39 +56,11 @@ $method = $actionName[1];
              'Ifram_ConfigController' =>
                 array('method' => 'index', 'name' => Lang::get('lang.Ifram'))
             );?>
-        <li class="dropdown @if(!empty($actionControllers[$controller])) active @endif">
+        <li class="hide dropdown @if(!empty($actionControllers[$controller])) active @endif">
             <a href="{{--action('Account_ConfigController@index')--}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Lang::get('lang.configuration')}}<span class="caret"></span></a>
             <ul class="dropdown-menu">
                 @foreach($actionControllers as $action=>$data)
                     <li class=" @if($controller == $action) active @endif @if(!empty($data['class'])){{$data['class']}}@endif" ><a href="{{--action($action.'@'.$data['method'])--}}">{{$data['name']}}</a></li>
-                @endforeach
-            </ul>
-        </li>
-
-        <?php $actionController = 'Account_IndexController';?>
-        <li @if($controller == $actionController)class="active"@endif><a href="{{action($actionController.'@index')}}">{{Lang::get('lang.statistic')}}</a></li>
-
-
-
-        <?php
-        $actionControllers =
-            array(
-             array('action'=>'Ifram_IndexController','method' => 'index', 'name' => Lang::get('lang.createOrEdit'),'class'=>''),
-             array('action'=>'Ifram_StatisticController','method'=>'index', 'name' => Lang::get('lang.statistic'),'class'=>''),
-             array('action'=>'Ifram_IndexController','method' => 'getReadListData', 'name' => Lang::get('lang.result'))
-            );
-        $active = false;
-            foreach($actionControllers as $data){
-                if($controller == $data['action'] && $method == $data['method']){
-                    $active = true;
-                }
-            }
-            ?>
-        <li class="dropdown @if($active) active @endif">
-            <a href="{{--action('Account_ConfigController@index')--}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Lang::get('lang.Ifram')}}<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                @foreach($actionControllers as $action=>$data)
-                    <li class=" @if($controller == $data['action'] && $method == $data['method']) active @endif @if(!empty($data['class'])){{$data['class']}}@endif" ><a href="{{--action($data['action'].'@'.$data['method'])--}}">{{$data['name']}}</a></li>
                 @endforeach
             </ul>
         </li>

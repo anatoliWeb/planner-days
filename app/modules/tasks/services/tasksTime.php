@@ -20,7 +20,18 @@ class Tasks_Services_TasksTime extends Core_Service_Abstract
     protected $_models = 'Tasks_Models_TasksTime';
 
 
+    public function googleCalendarEvent(){
+        // THIS KEY WON'T WORK IN PRODUCTION!!!
+        // To make your own Google API key, follow the directions here:
+        // http://fullcalendar.io/docs/google_calendar/
+        $googleCalendarApiKey = 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE';
 
+        // US Holidays
+        $events = 'usa__en@holiday.calendar.google.com';
+
+
+
+    }
 
     public function allEvents($accountId){
         $select = $this->model->select();
@@ -163,7 +174,7 @@ class Tasks_Services_TasksTime extends Core_Service_Abstract
 
     public function saveEvent($data){
 
-        if(empty($data['start']) || (empty($data['start']) && empty($data['end']))){
+        if((empty($data['start']) && empty($data['end']))){
             return false;
         }
 
@@ -178,6 +189,12 @@ class Tasks_Services_TasksTime extends Core_Service_Abstract
         if(isset($data['description']))$dataModel['description'] = $data['description'];
         if(isset($data['tasks_type_id']))$dataModel['tasks_type_id'] = $data['tasks_type_id'];
 
+        // howers
+        $d0 = new DateTime($dataModel['end']);
+        $d1 = new DateTime($dataModel['start']);
+        $hover = ($d0->getTimestamp()-$d1->getTimestamp())/(60*60);
+        $dataModel['hover'] = ($hover<0)?0:$hover;
+
         $model = $this->model->select();
         $model->where('id','=',$data['id']);
         if($model->count()){
@@ -189,15 +206,12 @@ class Tasks_Services_TasksTime extends Core_Service_Abstract
             // create date
             $dataModel['account_id'] =  Auth::user()->id;
             $dataModel['account_create_id'] =  Auth::user()->id;
+            $dataModel['created_at'] =  date("Y-m-d H:i:s");
             $data['id'] = $model->insertGetId($dataModel);
         }
 
         $dataEvent = $this->eventById($data['id']);
 
         return $dataEvent;
-    }
-
-    public function summHover(&$rowModel){
-
     }
 }

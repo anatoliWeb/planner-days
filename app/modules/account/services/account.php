@@ -135,4 +135,16 @@ class Account_Services_Account extends Core_Service_Abstract{
             $m->to($data->email, $data->login)->subject(Lang::get('lang.confirmEmail'));
         });
     }
+
+    public function allIdByData(){
+        $select = $this->model->select();
+        $rows = $select->get();
+
+        $_rows = array();
+        foreach($rows as $row){
+            $_rows[$row->id] = $row;
+        }
+
+        return $_rows;
+    }
 }

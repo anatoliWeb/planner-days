@@ -14,5 +14,17 @@ class Core_Blocks_Abstract{
 
     protected function _init(){
 
+        // init service
+        if(!empty($this->_services)){
+            if(is_array($this->_services)){
+                //    protected $_services = array('service'=>'name service','serviceName'=>'name service name');
+                foreach($this->_services as $variable=>$nameService){
+                    $this->$variable = new $nameService();
+                }
+            }else{
+                //    protected $_services = 'name service';
+                $this->service = new $this->_services();
+            }
+        }
     }
 }

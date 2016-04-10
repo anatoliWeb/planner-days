@@ -23,6 +23,7 @@ class CreateTableTasksTime extends Migration {
             $table->integer('account_id');
             $table->dateTime('start');
             $table->dateTime('end');
+            $table->decimal('hover');
             $table->string('title',255);
             $table->text('description');
             $table->integer('account_create_id');

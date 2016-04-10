@@ -15,10 +15,7 @@ class Account_IndexController extends Core_Controller_Abstract{
     protected $_services = 'Account_Services_Account';
 
     public function index(){
-
-        $rows = $this->service->getAll();
         $view = View::make('account::script.default.index.index');
-        $view->with('rows',$rows);
         $view->with('account', Auth::user());
         return $view;
     }

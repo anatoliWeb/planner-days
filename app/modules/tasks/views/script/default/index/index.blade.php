@@ -64,9 +64,14 @@
                         right: 'month,agendaWeek,agendaDay'
                     },
                     businessHours: true,
-//                    googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
+                    googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
 
                     events:{ url: '{{action('Tasks_IndexController@postEvents')}}' },
+                    eventSources: [
+                                {
+                                    googleCalendarId: 'usa__en@holiday.calendar.google.com'
+                                }
+                                ],
                     eventClick: me.showEvent,
                     // US Holidays
 

@@ -241,4 +241,15 @@ return array(
     "start"                         =>  "Start",
     "end"                         =>  "End",
     "type"                         =>  "type",
+
+
+    "account"                       =>  "Account",
+    "id"                       =>  "Id",
+    "total"                       =>  "Total",
+    "used"                       =>  "Used",
+    "left"                       =>  "Left",
+    "work hours"                       =>  "work hours",
+    "holidays"                       =>  "holidays",
+    "Info"                       =>  "Info",
+
 );

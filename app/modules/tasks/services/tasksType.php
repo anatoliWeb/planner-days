@@ -18,6 +18,11 @@ class Tasks_Services_TasksType extends Core_Service_Abstract
      */
     protected $_models = 'Tasks_Models_TasksType';
 
+    /**
+     * @param bool $selectArray
+     * @param bool $active
+     * @return array|\Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function allType($selectArray = false, $active = true){
 
         $select = $this->model->select();
@@ -43,5 +48,18 @@ class Tasks_Services_TasksType extends Core_Service_Abstract
         }
     }
 
+    public function allIdByData(){
+        $allType = $this->allType(false,false);
+        $rows = array();
+        foreach($allType as $row){
+            $object = new stdClass();
+            $object->id = $row->id;
+            $object->title = $row->title;
+            $object->description = $row->description;
+            $rows[$row->id] = $object;
+        }
+
+        return $rows;
+    }
 
 }
