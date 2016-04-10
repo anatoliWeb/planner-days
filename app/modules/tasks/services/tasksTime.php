@@ -18,21 +18,7 @@ class Tasks_Services_TasksTime extends Core_Service_Abstract
      * @var string
      */
     protected $_models = 'Tasks_Models_TasksTime';
-
-
-    public function googleCalendarEvent(){
-        // THIS KEY WON'T WORK IN PRODUCTION!!!
-        // To make your own Google API key, follow the directions here:
-        // http://fullcalendar.io/docs/google_calendar/
-        $googleCalendarApiKey = 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE';
-
-        // US Holidays
-        $events = 'usa__en@holiday.calendar.google.com';
-
-
-
-    }
-
+    
     public function allEvents($accountId){
         $select = $this->model->select();
         $select->where('account_id','=',$accountId);

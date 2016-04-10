@@ -58,6 +58,7 @@
                             center: 'title',
                             right: 'month,agendaWeek,agendaDay'
                         },
+                        googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
                         businessHours: true,
                         selectable: true,
                         selectHelper: true,
@@ -75,6 +76,11 @@
                         editable: true,
                         eventLimit: true, // allow "more" link when too many events
                         events:{ url: '{{action('Tasks_IndexController@postEvents')}}' },
+                        eventSources: [
+                            {
+                                googleCalendarId: 'usa__en@holiday.calendar.google.com'
+                            }
+                        ],
                         loading: function(bool) {
                             me.loadingBlock.toggle(bool);
                         }

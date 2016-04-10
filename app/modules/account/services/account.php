@@ -91,6 +91,7 @@ class Account_Services_Account extends Core_Service_Abstract{
                 $rowModel->update($dataModel);
                 $modelId = $user['id'];
             }else{
+                $dataModel['created_at'] =  date("Y-m-d H:i:s");
                 // create date
                 $modelId = $model->insertGetId($dataModel);
             }
