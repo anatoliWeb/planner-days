@@ -41,7 +41,10 @@ class Core_IndexController extends Core_Controller_Abstract{
         $taskType = $this->serviceTasksType->allIdByData();
 
         if($this->serviceAccountGroup->hasParentGroup($account_id)) {
-            $rows = $this->service->detalRows($data);
+
+            $ids = $this->serviceAccountGroup->listGroupChildrenIds();
+
+            $rows = $this->service->detalRows($data, $ids);
             $accountData = $this->serviceAccount->allIdByData();
             $view = View::make('statistic::script.default.index.allAccount');
             $view->with('accountData', $accountData);

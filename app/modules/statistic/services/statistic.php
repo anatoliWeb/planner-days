@@ -63,7 +63,7 @@ class Statistic_Services_Statistic extends Core_Service_Abstract
         return $rows;
     }
 
-    public function detalRows($data){
+    public function detalRows($data, $ids){
 
         $account_id = $data['account_id'];
 
@@ -73,6 +73,7 @@ class Statistic_Services_Statistic extends Core_Service_Abstract
         $select->groupBy('account_id');
         $select->orderBy('tasks_type_id');
         $select->where('account_id','!=',$account_id);
+        $select->whereIn('account_id', $ids);
         $rows= $select->get();
         $rowsTotal = array();
         foreach($rows as $row){
@@ -85,6 +86,7 @@ class Statistic_Services_Statistic extends Core_Service_Abstract
         $select->groupBy('account_id');
         $select->orderBy('tasks_type_id');
         $select->where('account_id','!=',$account_id);
+        $select->whereIn('account_id', $ids);
         $select->where('end',"<",date("Y-m-d H:i:s"));
         $rows = $select->get();
         foreach($rows as $row){
