@@ -139,4 +139,17 @@ class Tasks_IndexController extends Core_Controller_Abstract
 
         return Response::json($json);
     }
+
+    public function postRemoveEvent(){
+        $data = Input::all();
+        try{
+            $this->serviceTime->deleteEvent($data['id']);
+            $json['success'] = true;
+        }catch (Exception $e){
+            $json['message'] = $e->getMessage();
+            $json['success'] = false;
+        }
+
+        return Response::json($json);
+    }
 }

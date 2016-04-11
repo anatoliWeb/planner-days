@@ -12,12 +12,14 @@ class Account_Services_Account extends Core_Service_Abstract{
      * @var \AccountModelsAccount
      */
     protected $model;
-
+    /**
+     * @var \Account_Models_AccountGroupMap
+     */
+    protected $modelGroupMap;
     /**
      * @var string
      */
-    protected $_models = 'Account_Models_Account';
-
+    protected $_models = array('model'=>'Account_Models_Account', 'modelGroupMap'=>'Account_Models_AccountGroupMap');
 
     public function authorization($data){
 
@@ -50,6 +52,12 @@ class Account_Services_Account extends Core_Service_Abstract{
 
         $model = $this->model;
         $modelId = $model->insertGetId($dataModel);
+
+        $defaultAccountGroupId = 4;
+        $this->modelGroupMap->insert(array(
+            'account_id'        =>  $modelId,
+            'account_groupe_id' =>  $defaultAccountGroupId
+        ));
 
         $rows = $model->find($modelId);
 

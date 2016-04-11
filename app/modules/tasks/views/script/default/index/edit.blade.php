@@ -39,11 +39,14 @@
                     me.modalBoxHead = me.modalBox.find(".modal-title");
                     me.modalBoxBody = me.modalBox.find(".modal-body");
                     me.modalBoxFooter = me.modalBox.find(".modal-footer");
+                    // add delete button
+                    me.modalBoxFooter.append($('<button>',{'type':'button', 'class':'btn btn-danger','id':'removeEvent'}).text('{{Lang::get('lang.remove')}}'));
                     // init calendar
                     me.fullCalendar();
                 },
                 initEvent: function(){
                     // init event
+
                 },
                 fullCalendar: function(){
                     me.calendarBlock.fullCalendar({
@@ -105,14 +108,24 @@
                     return false;
                 },
                 formEditEvent: function(data){
+
+
                     $.ajax({url: '{{action('Tasks_IndexController@getEventForm')}}','data': data})
                         .done(function(json){
                             if(json.success){
                                 me.modalBoxHead.text('Create Event');
                                 me.modalBoxBody.html(json.template);
+                                var id = me.modalBoxBody.find('input[name="id"]').val();
+                                if(id > 0){
+                                   $('#removeEvent').show();
+                                }else{
+                                   $('#removeEvent').hide();
+                                }
                                 me.modalBoxFooter
                                     .off('click', '.submit-form', me.saveEventDataForm)
                                     .on('click', '.submit-form', me.saveEventDataForm)
+                                    .off('click','#removeEvent',me.removeEvent)
+                                    .on('click','#removeEvent',me.removeEvent)
                                     ;
                                 me.modalBox.modal('show');
                                 me.initDateDimePicker();
@@ -140,6 +153,22 @@
                                 me.calendarBlock.fullCalendar('renderEvent', json.data, true);
                             }
                             me.modalBox.modal('hide');
+                        }).fail(function (jqXHR, textStatus) {
+                              console.log("Request failed: " + textStatus);
+                              me.modalBox.modal('hide');
+                        });
+                },
+                removeEvent: function(){
+                    var data = me.modalBoxBody.find('#modal-form').serialize(), id=me.modalBoxBody.find('input[name="id"]').val();
+
+                    if(id > 0){
+                        me.calendarBlock.fullCalendar('removeEvents', id);
+                    }
+
+                    $.ajax({url: '{{action('Tasks_IndexController@postRemoveEvent')}}','data': data,'type':'post'})
+                        .done(function(json){
+                            me.modalBox.modal('hide');
+
                         }).fail(function (jqXHR, textStatus) {
                               console.log("Request failed: " + textStatus);
                               me.modalBox.modal('hide');

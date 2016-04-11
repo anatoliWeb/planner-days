@@ -8,6 +8,12 @@
 
 class Core_Models_Abstract extends Eloquent{
     /**
+    * name table
+    * @var string
+    */
+    protected $table ;
+
+    /**
      * @var bool
      */
     public static $unguarded = true;
@@ -24,6 +30,10 @@ class Core_Models_Abstract extends Eloquent{
 
     protected function _init(){
 
+    }
+
+    public function getNameTable(){
+        return $this->table;
     }
 
 }

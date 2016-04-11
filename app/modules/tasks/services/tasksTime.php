@@ -200,4 +200,9 @@ class Tasks_Services_TasksTime extends Core_Service_Abstract
 
         return $dataEvent;
     }
+
+    public function deleteEvent($id){
+        $model = $this->model->find($id);
+        return $model->delete($id);
+    }
 }

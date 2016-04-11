@@ -39,6 +39,11 @@ class Account_Models_Account extends Core_Models_Abstract implements UserInterfa
      */
     protected $hidden = array('password', 'remember_token');
 
+
+    public function groups(){
+        return $this->belongsToMany("account_group","account_group_map");
+    }
+
     /**
      * @param $login
      * @param $password

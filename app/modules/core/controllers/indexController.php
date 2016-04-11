@@ -21,37 +21,38 @@ class Core_IndexController extends Core_Controller_Abstract{
      * @var \Account_Services_Account
      */
     protected $serviceAccount;
+/**
+     * @var \Account_Services_AccountGroup
+     */
+    protected $serviceAccountGroup;
 
 
-    protected $_services = array('service'=>'Statistic_Services_Statistic', 'serviceTasksType'=>'Tasks_Services_TasksType','serviceAccount'=>'Account_Services_Account');
+    protected $_services = array('service'=>'Statistic_Services_Statistic', 'serviceTasksType'=>'Tasks_Services_TasksType','serviceAccount'=>'Account_Services_Account','serviceAccountGroup'=>'Account_Services_AccountGroup');
 
     public function index(){
 //          empty page
 //        $view = View::make('core::script.default.index.homePage');
 //        return $view;
+
         $data = $data = Input::all();
         $account_id = Auth::user()->id;
         $data['account_id'] =$account_id;
 
-        if($account_id == 1 ) {
+        $taskType = $this->serviceTasksType->allIdByData();
+
+        if($this->serviceAccountGroup->hasParentGroup($account_id)) {
             $rows = $this->service->detalRows($data);
-            $taskType = $this->serviceTasksType->allIdByData();
             $accountData = $this->serviceAccount->allIdByData();
             $view = View::make('statistic::script.default.index.allAccount');
-            $view->with('data',$rows);
             $view->with('accountData', $accountData);
-            $view->with('taskType', $taskType);
-            return $view;
         }else{
-
             $rows = $this->service->detalRow($data);
-            $taskType = $this->serviceTasksType->allIdByData();
             $view = View::make('statistic::script.default.index.index');
-            $view->with('data',$rows);
-            $view->with('taskType', $taskType);
-            return $view;
         }
 
+        $view->with('taskType', $taskType);
+        $view->with('data',$rows);
+        return $view;
 
     }
 }

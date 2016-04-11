@@ -13,5 +13,5 @@ class Account_Models_AccountGroup extends Core_Models_Abstract{
      *
      * @var string
      */
-    protected $table = 'accountGroup';
+    protected $table = 'account_group';
 }

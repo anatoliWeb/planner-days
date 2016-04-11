@@ -11,5 +11,5 @@ class Account_Models_AccountGroupMap extends Core_Models_Abstract{
      *
      * @var string
      */
-    protected $table = 'accountGroupMap';
+    protected $table = 'account_group_map';
 }
